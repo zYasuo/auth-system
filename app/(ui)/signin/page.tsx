@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "Sign in to access your account and manage your settings.",
 };
 
-
 export default function LoginHome() {
   const navigationHeader = [{ label: "", href: "/signin" }];
   return (
@@ -28,7 +27,7 @@ export default function LoginHome() {
         navigation={navigationHeader}
       />
       <div className="flex min-h-screen items-center justify-center ">
-        <div className="max-w-md w-full p-6 shadow-md space-y-6">
+        <div className="max-w-md w-full p-6 space-y-6">
           <div className="flex-1 flex items-center justify-center">
             <h1 className="text-3xl font-bold">Sign In</h1>
           </div>
@@ -38,6 +37,14 @@ export default function LoginHome() {
             </p>
           </div>
           <FormLogin />
+          <div className="flex items-center justify-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <a href="/signup" className="text-primary hover:underline">
+                Sign Up
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </>

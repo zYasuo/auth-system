@@ -1,7 +1,7 @@
 "use server"
 import { redirect } from "next/navigation"
-import { SSigninSchema } from "@/app/(ui)/signin/validator/form-login.validator"
 import { TActionState } from "@/app/(ui)/signin/actions/types/action-state.types"
+import { SSigninSchema } from "@/app/(ui)/signin/validator/form-login.validator"
 
 export async function ALoginAction(prevState: TActionState, data: FormData): Promise<TActionState> {
   const formData = {

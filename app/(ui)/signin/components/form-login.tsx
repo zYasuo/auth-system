@@ -1,8 +1,8 @@
 "use client"
-import { useActionState } from "react"
 import { Input } from "@/components/ui/input"
 import { ALoginAction } from "@/app/(ui)/signin/actions/auth.actions"
-import { SubmitButton } from "@/app/(ui)/signin/components/form-login-button"
+import { SubmitButton } from "@/components/form/form-button";
+import { useActionState } from "react"
 
 export function FormLogin() {
   const [state, formAction] = useActionState(ALoginAction, {
@@ -24,7 +24,7 @@ export function FormLogin() {
 
       {state.error && <div className="text-red-500 text-sm">{state.error}</div>}
 
-      <SubmitButton />
+      <SubmitButton defaultMessage="Sign In" pendingMessage="Signing in..." />
     </form>
   )
 }

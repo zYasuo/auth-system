@@ -11,13 +11,15 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.next();
   }
-
+  
+  const protectedRoutes = ["/user", "/forms"];
+  const isProtectedPage = protectedRoutes.includes(request.nextUrl.pathname);
+  
   const isRootPage = request.nextUrl.pathname === "/";
   const accessToken = request.cookies.get("access_token")?.value;
   const refreshToken = request.cookies.get("refresh_token")?.value;
 
   const isAuthPage = ["/signin", "/signup"].includes(request.nextUrl.pathname);
-  const isProtectedPage = request.nextUrl.pathname.startsWith("/user");
 
     if (isRootPage) {
     if (accessToken) {

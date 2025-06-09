@@ -60,7 +60,7 @@ export default function SignupHome() {
               </CardFooter>
             </div>
           </div>
-          <div className="hidden md:flex flex-col items-center justify-center h-full p-6 bg-card border-l border-primary">
+          <div className="hidden md:flex flex-col items-center justify-center h-full p-6 bg-card border-l border-border">
             <div className="w-full h-full"></div>
           </div>
         </div>

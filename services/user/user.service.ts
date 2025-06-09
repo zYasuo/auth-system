@@ -1,7 +1,7 @@
 import * as argon2 from "argon2"
 import { JWTUtils } from "@/lib/auth/jwt/utils"
 import type { User } from "@/lib/generated/prisma"
-import type { TActionState } from "@/types/action-state.types"
+import type { TActionState } from "@/types"
 import { type IUserRepository, UserRepository } from "@/repositories/user/user.repository"
 import { type ITokenRepository, TokenRepository } from "@/repositories/token/token.repository"
 

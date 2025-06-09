@@ -1,5 +1,5 @@
 import { SSigninSchemaValidator } from "@/app/(ui)/signin/validator/form-login.validator"
-import type { TActionState } from "@/types/action-state.types"
+import type { TActionState } from "@/types"
 import { type IUserService, UserService } from "@/services/user/user.service"
 
 export class SignController {

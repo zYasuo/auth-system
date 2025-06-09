@@ -1,5 +1,5 @@
 "use server"
-import type { TActionState } from "@/types/action-state.types"
+import type { TActionState } from "@/types"
 import { ResetPasswordController } from "@/app/(ui)/reset-password/controller/reset-password.controller"
 
 export async function AResetPasswordAction(prevState: TActionState, formData: FormData): Promise<TActionState> {

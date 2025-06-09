@@ -17,7 +17,7 @@ export default function LoginHome() {
         logo={{
           text: "",
           href: "/",
-          fixed: false,
+          fixed: true,
           image: {
             src: "/next.svg",
             alt: "Logo",

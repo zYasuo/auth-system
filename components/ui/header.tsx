@@ -54,8 +54,8 @@ export function Header({
     <header
       className={`${
         logo.fixed
-          ? "top-0 left-0 right-0 z-50 border-border/20  backdrop-blur-md border-b border-b-primary"
-          : " border-border/20 backdrop-blur-md  border-t-primary border-t"
+          ? "top-0 left-0 right-0 z-50 backdrop-blur-md bg-background"
+          : " backdrop-blur-md"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -123,7 +123,6 @@ export function Header({
           </div>
         </div>
 
-        {/* Mobile Menu - só aparece se houver navegação */}
         {isMenuOpen && navigation.some((item) => item.label.trim() !== "") && (
           <div className="lg:hidden border-t border-border py-4 bg-background/95 backdrop-blur-sm">
             <div className="flex flex-col space-y-4">
@@ -143,7 +142,6 @@ export function Header({
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.label}
-                      {/* Indicador visual para item ativo no mobile */}
                       {isActivePath(item.href) && (
                         <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full" />
                       )}

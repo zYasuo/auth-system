@@ -1,4 +1,4 @@
-import type { TActionState } from "@/types/action-state.types"
+import type { TActionState } from "@/types"
 import { SFormRegisterSchemaValidator } from "@/app/(ui)/signup/validator/form-register.validator"
 import { type IUserService, UserService } from "@/services/user/user.service"
 

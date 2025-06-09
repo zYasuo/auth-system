@@ -1,6 +1,6 @@
 import * as argon2 from "argon2";
 import { randomBytes } from "crypto";
-import type { TActionState } from "@/types/action-state.types";
+import type { TActionState } from "@/types";
 import {
   type IUserRepository,
   UserRepository,

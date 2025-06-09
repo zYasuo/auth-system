@@ -1,5 +1,5 @@
 "use server";
-import type { TActionState } from "@/types/action-state.types";
+import type { TActionState } from "@/types";
 import { SignUpController } from "@/app/(ui)/signup/controller/signup.controller";
 
 export async function ARegisterUserAction(

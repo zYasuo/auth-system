@@ -1,6 +1,6 @@
 "use server"
 import { SignController } from "@/app/(ui)/signin/controller/sign.controller"
-import { TActionState } from "@/types/action-state.types"
+import { TActionState } from "@/types"
 
 export async function ALoginAction(prevState: TActionState, formData: FormData) {
   const userController = new SignController()

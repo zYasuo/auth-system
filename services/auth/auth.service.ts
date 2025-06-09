@@ -1,5 +1,5 @@
 // services/auth.service.ts
-import type { TActionState } from "@/types/action-state.types";
+import type { SafeUserData, ServiceResponse, TActionState } from "@/types";
 import {
   type IUserRepository,
   UserRepository,
@@ -20,6 +20,8 @@ export interface IAuthService {
   loginUser(data: { email: string; password: string }): Promise<TActionState>;
   logoutUser(): Promise<TActionState>;
   refreshToken(refreshToken: string): Promise<TActionState>;
+    getCurrentUser(accessToken: string): Promise<ServiceResponse<SafeUserData>>
+
 }
 
 export class AuthService implements IAuthService {
@@ -63,7 +65,6 @@ export class AuthService implements IAuthService {
         password: hashedPassword,
       });
 
-      // Explicit verification
       if (!newUser) {
         return {
           error: "Failed to create user",
@@ -242,6 +243,32 @@ export class AuthService implements IAuthService {
         fieldErrors: {},
         success: false,
       };
+    }
+  }
+
+  async getCurrentUser(accessToken: string): Promise<ServiceResponse<SafeUserData>> {
+    try {
+      const payload = await JWTUtils.verifyAccessToken(accessToken)
+
+      if (!payload) {
+        return { success: false, error: "Invalid token" }
+      }
+
+      const user = await this.userRepository.findById(payload.userId)
+
+      if (!user) {
+        return { success: false, error: "User not found" }
+      }
+
+      const { password, ...safeUserData } = user
+
+      return {
+        success: true,
+        data: safeUserData,
+      }
+    } catch (error) {
+      console.error("Error in getCurrentUser service:", error)
+      return { success: false, error: "Internal server error" }
     }
   }
 }

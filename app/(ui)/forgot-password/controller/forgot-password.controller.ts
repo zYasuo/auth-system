@@ -1,4 +1,4 @@
-import type { TActionState } from "@/types/action-state.types"
+import type { TActionState } from "@/types"
 import { SForgotPasswordSchemaValidator } from "@/app/(ui)/forgot-password/validator/forgot-password.validator"
 import { type IPasswordResetService, PasswordResetService } from "@/services/auth/password-reset.service"
 

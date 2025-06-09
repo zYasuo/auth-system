@@ -1,30 +1,60 @@
-import { UserService } from "@/app/(ui)/signup/services/user.service"
-import type { TActionState } from "@/app/(ui)/signup/actions/types/action-state.types"
-import { SFormRegisterValidator } from "@/app/(ui)/signup/validator/form-register.validator"
+import type { TActionState } from "@/app/(ui)/signup/actions/types/action-state.types";
+import { SFormRegisterValidator } from "@/app/(ui)/signup/validator/form-register.validator";
+import { IUserService, UserService } from "@/services/user/user.service";
 
 export class UserController {
-  private userService: UserService
+  private userService: IUserService;
 
-  constructor(userService?: UserService) {
-    this.userService = userService || new UserService()
+  constructor(userService?: IUserService) {
+    this.userService = userService || new UserService();
   }
 
   async register(formData: FormData): Promise<TActionState> {
-    const data = {
+    try {
+      const rawData = this.extractFormData(formData);
+
+      const validationResult = this.validateFormData(rawData);
+      if (!validationResult.success) {
+        return validationResult.error;
+      }
+
+      return await this.userService.registerUser(validationResult.data);
+    } catch (error) {
+      console.error("Erro no controller:", error);
+      return {
+        error: "Erro interno do servidor",
+        fieldErrors: {},
+        success: false,
+      };
+    }
+  }
+
+  private extractFormData(formData: FormData) {
+    return {
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
-    }
+    };
+  }
 
-    const parsedData = SFormRegisterValidator.safeParse(data)
+  private validateFormData(
+    data: any
+  ):
+    | { success: true; data: { name: string; email: string; password: string } }
+    | { success: false; error: TActionState } {
+    const parsedData = SFormRegisterValidator.safeParse(data);
+
     if (!parsedData.success) {
       return {
-        error: "Dados inválidos",
-        fieldErrors: parsedData.error.flatten().fieldErrors,
         success: false,
-      }
+        error: {
+          error: "Dados inválidos",
+          fieldErrors: parsedData.error.flatten().fieldErrors,
+          success: false,
+        },
+      };
     }
 
-    return await this.userService.registerUser(parsedData.data)
+    return { success: true, data: parsedData.data };
   }
 }

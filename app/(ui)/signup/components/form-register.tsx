@@ -32,11 +32,12 @@ export function FormRegister() {
     if (state.success && state.message && !successToastShown.current) {
       successToastShown.current = true;
 
-      toast.loading("Redirecionando para o login...");
-
-      setTimeout(() => {
-        router.push("/signin");
-      }, 2000);
+      toast.loading(state.message, {
+        duration: 1000,
+        onDismiss: () => {
+          router.push("/signin");
+        },
+      });
     }
 
     if (state.error && !state.success && !errorToastShown.current) {

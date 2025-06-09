@@ -1,33 +1,35 @@
-"use client"
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
   logo?: {
-    text: string
-    href?: string
+    text: string;
+    href?: string;
+    fixed?: boolean;
     image?: {
-      src: string
-      alt: string
-      width?: number
-      height?: number
-      className?: string
-    }
-  }
+      src: string;
+      alt: string;
+      width?: number;
+      height?: number;
+      className?: string;
+    };
+  };
   navigation?: {
-    label: string
-    href: string
-  }[]
+    label: string;
+    href: string;
+  }[];
 }
 
 export function Header({
   logo = {
     text: "",
     href: "/",
+    fixed: false,
     image: {
       src: "/next.svg",
       alt: "Next.js logo",
@@ -38,31 +40,42 @@ export function Header({
   },
   navigation = [],
 }: HeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const isActivePath = (href: string) => {
     if (href === "/") {
-      return pathname === "/"
+      return pathname === "/";
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/20 bg-background/80 backdrop-blur-md border-t-2 border-t-primary">
+    <header
+      className={`${
+        logo.fixed
+          ? " top-0 left-0 right-0 z-50 border-border/20 bg-background/80 backdrop-blur-md border-b-2 border-t-primary"
+          : ""
+      }`}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={logo.href || "/"} className="flex items-center space-x-2">
             <Image
-              className={logo.image?.className || "brightness-0 invert dark:brightness-100 dark:invert-0"}
+              className={
+                logo.image?.className ||
+                "brightness-0 invert dark:brightness-100 dark:invert-0"
+              }
               src={logo.image?.src || "/next.svg"}
               alt={logo.image?.alt || "Logo"}
               width={logo.image?.width || 90}
               height={logo.image?.height || 19}
               priority
             />
-            <span className="font-bold text-lg hidden sm:block">{logo.text}</span>
+            <span className="font-bold text-lg hidden sm:block">
+              {logo.text}
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -72,14 +85,18 @@ export function Header({
                 key={item.href}
                 href={item.href}
                 className={`relative font-medium transition-colors duration-200 group ${
-                  isActivePath(item.href) ? "" : "text-muted-foreground hover:text-foreground"
+                  isActivePath(item.href)
+                    ? ""
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {item.label}
                 {/* Linha animada */}
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    isActivePath(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                    isActivePath(item.href)
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
@@ -90,8 +107,17 @@ export function Header({
           <div className="flex items-center space-x-4">
             {/* Mobile Menu Button - só aparece se houver navegação */}
             {navigation.some((item) => item.label.trim() !== "") && (
-              <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant="ghost" size="sm" className="lg:hidden">
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <Button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                variant="ghost"
+                size="sm"
+                className="lg:hidden"
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </Button>
             )}
           </div>
@@ -129,5 +155,5 @@ export function Header({
         )}
       </div>
     </header>
-  )
+  );
 }

@@ -1,8 +1,13 @@
 import { prisma } from "@/lib/prisma/prisma";
+import { User } from "@/lib/generated/prisma";
 
 export interface IUserRepository {
-  findByEmail(email: string): Promise<any>;
-  create(data: { name: string; email: string; password: string }): Promise<any>;
+  findByEmail(email: string): Promise<User | null>;
+  create(data: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<User | null>;
 }
 
 export class UserRepository implements IUserRepository {

@@ -20,11 +20,11 @@ export default function SignupHome() {
   const navigationHeader = [{ label: "", href: "/signup" }];
   return (
     <div className="h-screen w-full flex flex-col">
-      {/* Header fixo no topo */}
       <Header
         logo={{
           text: "",
           href: "/",
+          fixed: false,
           image: {
             src: "/next.svg",
             alt: "Logo",
@@ -35,20 +35,22 @@ export default function SignupHome() {
         }}
         navigation={navigationHeader}
       />
-      <div className="flex-1 w-full">
+      <Card className="flex-1 w-full">
         <div className="grid h-full w-full grid-cols-1 md:grid-cols-2">
-          <Card className="flex flex-col items-center justify-center h-full border-none">
+          <div className="flex flex-col items-center justify-center h-full">
             <div className="w-full max-w-md space-y-4">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold ">Sign Up</CardTitle>
-                <CardDescription>
-                  Create a new account to access exclusive features and content.
+              <CardHeader className="max-w-2xl">
+                <CardTitle className="text-primary leading-tighter text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter">
+                  Sign Up
+                </CardTitle>
+                <CardDescription className="text-base text-balance sm:text-lg">
+                  Create a new account.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <FormRegister />
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex justify-center">
                 <p className="text-sm text-muted-foreground">
                   Already have an account?{" "}
                   <a href="/signin" className="text-primary hover:underline">
@@ -57,10 +59,12 @@ export default function SignupHome() {
                 </p>
               </CardFooter>
             </div>
-          </Card>
-          <div className="hidden md:flex flex-col items-center justify-center bg-primary h-full"></div>
+          </div>
+          <div className="hidden md:flex flex-col items-center justify-center h-full p-6">
+            <Card className="w-full h-full bg-background"></Card>
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

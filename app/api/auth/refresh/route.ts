@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     await JWTUtils.setTokenCookies(accessToken, newRefreshToken)
     
     return NextResponse.redirect(new URL('/user', request.url))
-  } catch (error) {
+  } catch {
     await JWTUtils.clearTokenCookies()
     return NextResponse.redirect(new URL('/signin', request.url))
   }

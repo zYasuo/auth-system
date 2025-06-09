@@ -40,7 +40,7 @@ export class JWTUtils {
       }
       
       return payload as CustomJWTPayload
-    } catch (error) {
+    } catch {
       return null
     }
   }
@@ -54,7 +54,7 @@ export class JWTUtils {
       }
       
       return payload as CustomJWTPayload
-    } catch (error) {
+    } catch {
       return null
     }
   }

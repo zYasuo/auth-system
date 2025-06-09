@@ -35,17 +35,17 @@ export default function ForgotPasswordPage() {
               Forgot Password
             </CardTitle>
             <CardDescription className="text-base text-balance sm:text-lg">
-              Enter your email address and we'll send you instructions to reset your password.
+              {"Enter your email address and we'll send you instructions to reset your password."}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <FormForgotPassword />
           </CardContent>
           <CardFooter className="flex justify-center">
-            <p className="text-sm text-muted-foreground">
-              Remember your password?{" "}
-              <a href="/signin" className="text-primary hover:underline">
-                Sign In
+           <p className="text-sm text-muted-foreground">
+              {"Don't have an account?"}{" "}
+              <a href="/signup" className="text-primary hover:underline">
+                Sign Up
               </a>
             </p>
           </CardFooter>

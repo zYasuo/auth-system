@@ -1,31 +1,31 @@
-import type { TActionState } from "@/types"
-import { SFormRegisterSchemaValidator } from "@/app/(ui)/signup/validator/form-register.validator"
-import { type IUserService, UserService } from "@/services/user/user.service"
+import type { TActionState } from "@/types";
+import { SFormRegisterSchemaValidator } from "@/app/(ui)/signup/validator/form-register.validator";
+import { type IUserService, UserService } from "@/services/user/user.service";
 
 export class SignUpController {
-  private userService: IUserService
+  private userService: IUserService;
 
   constructor(userService?: IUserService) {
-    this.userService = userService || new UserService()
+    this.userService = userService || new UserService();
   }
 
   async signUp(formData: FormData): Promise<TActionState> {
     try {
-      const rawData = this.extractSignUpFormData(formData)
+      const rawData = this.extractSignUpFormData(formData);
 
-      const validationResult = this.validateSignUpFormData(rawData)
+      const validationResult = this.validateSignUpFormData(rawData);
       if (!validationResult.success) {
-        return validationResult.error
+        return validationResult.error;
       }
 
-      return await this.userService.signUpUser(validationResult.data)
+      return await this.userService.signUpUser(validationResult.data);
     } catch (error) {
-      console.error("Erro no sign up controller:", error)
+      console.error("Erro no sign up controller:", error);
       return {
         error: "Erro interno do servidor",
         fieldErrors: {},
         success: false,
-      }
+      };
     }
   }
 
@@ -34,15 +34,17 @@ export class SignUpController {
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
-    }
+    };
   }
 
-  private validateSignUpFormData(
-    data: any,
-  ):
+  private validateSignUpFormData(data: {
+    name: string | FormDataEntryValue | null;
+    email: string | FormDataEntryValue | null;
+    password: string | FormDataEntryValue | null;
+  }):
     | { success: true; data: { name: string; email: string; password: string } }
     | { success: false; error: TActionState } {
-    const parsedData = SFormRegisterSchemaValidator.safeParse(data)
+    const parsedData = SFormRegisterSchemaValidator.safeParse(data);
 
     if (!parsedData.success) {
       return {
@@ -52,9 +54,9 @@ export class SignUpController {
           fieldErrors: parsedData.error.flatten().fieldErrors,
           success: false,
         },
-      }
+      };
     }
 
-    return { success: true, data: parsedData.data }
+    return { success: true, data: parsedData.data };
   }
 }

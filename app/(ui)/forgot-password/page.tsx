@@ -1,16 +1,16 @@
 import { Header } from "@/components/ui/header"
-import { FormLogin } from "@/app/(ui)/signin/components/form-login"
 import type { Metadata } from "next"
+import { FormForgotPassword } from "@/app/(ui)/forgot-password/components/form-forgot-password"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Sign In",
-  keywords: ["Next.js", "Sign In", "Authentication"],
-  description: "Sign in to access your account and manage your settings.",
+  title: "Forgot Password",
+  keywords: ["Next.js", "Password Reset", "Authentication"],
+  description: "Reset your password to regain access to your account.",
 }
 
-export default function LoginHome() {
-  const navigationHeader = [{ label: "", href: "/signin" }]
+export default function ForgotPasswordPage() {
+  const navigationHeader = [{ label: "", href: "/forgot-password" }]
   return (
     <div className="h-screen w-full flex flex-col">
       <Header
@@ -32,20 +32,20 @@ export default function LoginHome() {
         <div className="w-full max-w-md space-y-4">
           <CardHeader className="text-center">
             <CardTitle className="text-primary leading-tighter text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter">
-              Sign In
+              Forgot Password
             </CardTitle>
             <CardDescription className="text-base text-balance sm:text-lg">
-              Please enter your email and password to sign in.
+              Enter your email address and we'll send you instructions to reset your password.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FormLogin />
+            <FormForgotPassword />
           </CardContent>
           <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <a href="/signup" className="text-primary hover:underline">
-                Sign Up
+              Remember your password?{" "}
+              <a href="/signin" className="text-primary hover:underline">
+                Sign In
               </a>
             </p>
           </CardFooter>

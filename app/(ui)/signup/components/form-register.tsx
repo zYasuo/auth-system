@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { EyeOff, Eye } from "lucide-react";
 import { SubmitButton } from "@/components/form/form-button";
 import { ARegisterUserAction } from "@/app/(ui)/signup/actions/register-user.actions";
+import { PasswordRequirements } from "@/components/form/password-requirements";
 import { useActionState, useEffect, useRef, useState } from "react";
 
 export function FormRegister() {
@@ -32,10 +33,17 @@ export function FormRegister() {
     if (state.success && state.message && !successToastShown.current) {
       successToastShown.current = true;
 
-      toast.loading(state.message, {
-        duration: 1000,
-        onDismiss: () => {
-          router.push("/signin");
+      const promise = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("Successfully signed up!");
+        }, 1000);
+      });
+
+      toast.promise(promise, {
+        loading: "Signing up...",
+        success: () => {
+          router.push("/user");
+          return state.message;
         },
       });
     }
@@ -58,9 +66,9 @@ export function FormRegister() {
   };
 
   return (
-    <form action={formAction} className="space-y-6 mb-4">
+    <form action={formAction} className="space-y-6">
       <div>
-        <Label htmlFor="name" className="block mb-4">
+        <Label htmlFor="name" className="block mb-2">
           Name
         </Label>
         <Input
@@ -80,7 +88,7 @@ export function FormRegister() {
       </div>
 
       <div>
-        <Label htmlFor="email" className="block mb-4">
+        <Label htmlFor="email" className="block mb-2">
           Email
         </Label>
         <Input
@@ -100,15 +108,15 @@ export function FormRegister() {
       </div>
 
       <div>
-        <Label htmlFor="password" className="block mb-4">
-          Password
-        </Label>
         <div className="relative">
+          <Label htmlFor="password" className="block mb-2">
+            Password
+          </Label>
           <Input
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
-            className="w-full"
+            className="w-full pr-10"
             required
             value={formData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
@@ -116,21 +124,24 @@ export function FormRegister() {
           />
           <button
             type="button"
-            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center z-10"
             onClick={() => setShowPassword(!showPassword)}
+            tabIndex={-1}
           >
             {showPassword ? (
-              <EyeOff className="h-4 w-4 " />
+              <EyeOff className="h-4 w-4 text-gray-500 hover:text-gray-700" />
             ) : (
-              <Eye className="h-4 w-4 " />
+              <Eye className="h-4 w-4 text-gray-500 hover:text-gray-700" />
             )}
           </button>
-          {state.fieldErrors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {state.fieldErrors.password[0]}
-            </p>
-          )}
         </div>
+
+        {state.fieldErrors.password && (
+          <p className="text-red-500 text-sm mt-1">
+            {state.fieldErrors.password[0]}
+          </p>
+        )}
+        <PasswordRequirements password={formData.password} />
       </div>
 
       <SubmitButton defaultMessage="Sign Up" pendingMessage="Signing Up..." />

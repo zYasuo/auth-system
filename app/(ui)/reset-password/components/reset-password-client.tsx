@@ -1,16 +1,16 @@
+"use client"
 import { Header } from "@/components/ui/header"
-import { FormLogin } from "@/app/(ui)/signin/components/form-login"
-import type { Metadata } from "next"
+import { FormResetPassword } from "@/app/(ui)/reset-password/components/form-reset-password"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export const metadata: Metadata = {
-  title: "Sign In",
-  keywords: ["Next.js", "Sign In", "Authentication"],
-  description: "Sign in to access your account and manage your settings.",
-}
+function ResetPasswordContent() {
+  const searchParams = useSearchParams()
+  const token = searchParams.get("token")
 
-export default function LoginHome() {
-  const navigationHeader = [{ label: "", href: "/signin" }]
+  const navigationHeader = [{ label: "", href: "/reset-password" }]
+
   return (
     <div className="h-screen w-full flex flex-col">
       <Header
@@ -32,25 +32,33 @@ export default function LoginHome() {
         <div className="w-full max-w-md space-y-4">
           <CardHeader className="text-center">
             <CardTitle className="text-primary leading-tighter text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter">
-              Sign In
+              Reset Password
             </CardTitle>
             <CardDescription className="text-base text-balance sm:text-lg">
-              Please enter your email and password to sign in.
+              Create a new password for your account.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FormLogin />
+            <FormResetPassword token={token} />
           </CardContent>
           <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <a href="/signup" className="text-primary hover:underline">
-                Sign Up
+              Remember your password?{" "}
+              <a href="/signin" className="text-primary hover:underline">
+                Sign In
               </a>
             </p>
           </CardFooter>
         </div>
       </Card>
     </div>
+  )
+}
+
+export default function ResetPasswordClient() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   )
 }

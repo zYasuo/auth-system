@@ -22,13 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         {children}
-        <Toaster
-          position="top-center"
-          richColors
-          closeButton={true}
-        />
+        <Toaster position="top-center" richColors closeButton={true} />
       </body>
     </html>
   );

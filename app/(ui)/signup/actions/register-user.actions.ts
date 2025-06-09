@@ -1,9 +1,11 @@
-"use server"
+"use server";
+import type { TActionState } from "@/types/action-state.types";
+import { SignUpController } from "@/app/(ui)/signup/controller/signup.controller";
 
-import { UserController } from "@/app/(ui)/signup/controller/user.controller"
-import type { TActionState } from "@/app/(ui)/signup/actions/types/action-state.types"
-
-export async function ARegisterUserAction(prevState: TActionState, formData: FormData): Promise<TActionState> {
-  const userController = new UserController()
-  return await userController.register(formData)
+export async function ARegisterUserAction(
+  prevState: TActionState,
+  formData: FormData
+): Promise<TActionState> {
+  const userController = new SignUpController();
+  return await userController.signUp(formData);
 }

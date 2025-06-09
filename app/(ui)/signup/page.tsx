@@ -24,7 +24,7 @@ export default function SignupHome() {
         logo={{
           text: "",
           href: "/",
-          fixed: false,
+          fixed: true,
           image: {
             src: "/next.svg",
             alt: "Logo",
@@ -35,7 +35,7 @@ export default function SignupHome() {
         }}
         navigation={navigationHeader}
       />
-      <Card className="flex-1 w-full">
+      <div className="flex-1 w-full">
         <div className="grid h-full w-full grid-cols-1 md:grid-cols-2">
           <div className="flex flex-col items-center justify-center h-full">
             <div className="w-full max-w-md space-y-4">
@@ -60,11 +60,11 @@ export default function SignupHome() {
               </CardFooter>
             </div>
           </div>
-          <div className="hidden md:flex flex-col items-center justify-center h-full p-6">
-            <Card className="w-full h-full bg-background"></Card>
+          <div className="hidden md:flex flex-col items-center justify-center h-full p-6 bg-card border-l border-primary">
+            <div className="w-full h-full"></div>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

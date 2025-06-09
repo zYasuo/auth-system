@@ -1,14 +1,14 @@
 // services/auth.service.ts
-import { TActionState } from "@/app/(ui)/signup/actions/types/action-state.types";
+import type { TActionState } from "@/types/action-state.types";
 import {
-  IUserRepository,
+  type IUserRepository,
   UserRepository,
-} from "@/app/(ui)/signup/repositories/user.repository";
+} from "@/repositories/user/user.repository";
 import { JWTUtils } from "@/lib/auth/jwt/utils";
 import {
-  ITokenRepository,
+  type ITokenRepository,
   TokenRepository,
-} from "@/repositories/auth/token.repository";
+} from "@/repositories/token/token.repository";
 import * as argon2 from "argon2";
 
 export interface IAuthService {
@@ -44,8 +44,8 @@ export class AuthService implements IAuthService {
 
       if (existingUser) {
         return {
-          error: "Usuário já existe",
-          fieldErrors: { email: ["Email já cadastrado"] },
+          error: "User already exists",
+          fieldErrors: { email: ["Email already registered"] },
           success: false,
         };
       }
@@ -63,10 +63,10 @@ export class AuthService implements IAuthService {
         password: hashedPassword,
       });
 
-      // Verificação explícita
+      // Explicit verification
       if (!newUser) {
         return {
-          error: "Falha ao criar usuário",
+          error: "Failed to create user",
           fieldErrors: {},
           success: false,
         };
@@ -90,12 +90,12 @@ export class AuthService implements IAuthService {
         error: "",
         fieldErrors: {},
         success: true,
-        message: "Conta criada com sucesso!",
+        message: "Account created successfully!",
       };
     } catch (error) {
-      console.error("Erro no registro:", error);
+      console.error("Registration error:", error);
       return {
-        error: "Erro interno do servidor",
+        error: "Internal server error",
         fieldErrors: {},
         success: false,
       };
@@ -111,8 +111,8 @@ export class AuthService implements IAuthService {
 
       if (!user) {
         return {
-          error: "Credenciais inválidas",
-          fieldErrors: { email: ["Email ou senha incorretos"] },
+          error: "Invalid credentials",
+          fieldErrors: { email: ["Invalid email or password"] },
           success: false,
         };
       }
@@ -121,8 +121,8 @@ export class AuthService implements IAuthService {
 
       if (!isValidPassword) {
         return {
-          error: "Credenciais inválidas",
-          fieldErrors: { password: ["Email ou senha incorretos"] },
+          error: "Invalid credentials",
+          fieldErrors: { password: ["Invalid email or password"] },
           success: false,
         };
       }
@@ -147,12 +147,12 @@ export class AuthService implements IAuthService {
         error: "",
         fieldErrors: {},
         success: true,
-        message: "Login realizado com sucesso!",
+        message: "Login successful!",
       };
     } catch (error) {
-      console.error("Erro no login:", error);
+      console.error("Login error:", error);
       return {
-        error: "Erro interno do servidor",
+        error: "Internal server error",
         fieldErrors: {},
         success: false,
       };
@@ -164,9 +164,8 @@ export class AuthService implements IAuthService {
       const { refreshToken } = await JWTUtils.getTokensFromCookies();
 
       if (refreshToken) {
-        const tokenRecord = await this.tokenRepository.findByRefreshToken(
-          refreshToken
-        );
+        const tokenRecord =
+          await this.tokenRepository.findByRefreshToken(refreshToken);
         if (tokenRecord) {
           await this.tokenRepository.deleteByUserId(tokenRecord.userId);
         }
@@ -178,37 +177,36 @@ export class AuthService implements IAuthService {
         error: "",
         fieldErrors: {},
         success: true,
-        message: "Logout realizado com sucesso!",
+        message: "Logout successful!",
       };
     } catch (error) {
-      console.error("Erro no logout:", error);
+      console.error("Logout error:", error);
       return {
-        error: "Erro interno do servidor",
+        error: "Internal server error",
         fieldErrors: {},
         success: false,
       };
     }
   }
 
- async refreshToken(refreshToken: string): Promise<TActionState> {
+  async refreshToken(refreshToken: string): Promise<TActionState> {
     try {
       const payload = await JWTUtils.verifyRefreshToken(refreshToken);
 
       if (!payload) {
         return {
-          error: "Token inválido",
+          error: "Invalid token",
           fieldErrors: {},
           success: false,
         };
       }
 
-      const tokenRecord = await this.tokenRepository.findByRefreshToken(
-        refreshToken
-      );
+      const tokenRecord =
+        await this.tokenRepository.findByRefreshToken(refreshToken);
 
       if (!tokenRecord) {
         return {
-          error: "Token não encontrado",
+          error: "Token not found",
           fieldErrors: {},
           success: false,
         };
@@ -235,12 +233,12 @@ export class AuthService implements IAuthService {
         error: "",
         fieldErrors: {},
         success: true,
-        message: "Token renovado com sucesso!",
+        message: "Token refreshed successfully!",
       };
     } catch (error) {
-      console.error("Erro ao renovar token:", error);
+      console.error("Token refresh error:", error);
       return {
-        error: "Erro interno do servidor",
+        error: "Internal server error",
         fieldErrors: {},
         success: false,
       };

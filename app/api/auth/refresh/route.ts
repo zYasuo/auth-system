@@ -1,4 +1,3 @@
-// app/api/auth/refresh/route.ts
 import { JWTUtils, type CustomJWTPayload } from '@/lib/auth/jwt/utils'
 import { NextRequest, NextResponse } from 'next/server'
 

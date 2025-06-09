@@ -47,7 +47,6 @@ export function FormResetPassword({ token }: FormResetPasswordProps) {
     message: "",
   });
 
-  // Validate token on component mount
   useEffect(() => {
     if (!token) {
       setTokenValidation({
@@ -82,9 +81,7 @@ export function FormResetPassword({ token }: FormResetPasswordProps) {
       toast.promise(promise, {
         loading: "Resetting password...",
         success: () => {
-          setTimeout(() => {
-            router.push("/signin");
-          }, 2000);
+          router.push("/signin");
           return state.message;
         },
       });

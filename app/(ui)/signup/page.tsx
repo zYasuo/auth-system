@@ -1,6 +1,6 @@
 import { Header } from "@/components/ui/header";
 import type { Metadata } from "next";
-import { FormRegister } from "./components/form-register";
+import { FormRegister } from "@/app/(ui)/signup/components/form-register";
 import {
   CardContent,
   CardDescription,

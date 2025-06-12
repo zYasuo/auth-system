@@ -54,8 +54,8 @@ export function Header({
     <header
       className={`${
         logo.fixed
-          ? "top-0 left-0 right-0 z-50 backdrop-blur-md bg-background"
-          : " backdrop-blur-md"
+          ? "top-0 left-0 right-0 z-50 backdrop-blur-md bg-background  border-t-primary border-t-4"
+          : " backdrop-blur-md "
       }`}
     >
       <div className="container mx-auto px-4">
